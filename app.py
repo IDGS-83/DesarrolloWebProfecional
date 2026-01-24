@@ -1,16 +1,15 @@
 from flask import Flask
-from controllers.homecontroller import BlueprintHome
+from controllers.HomeController import blueprint_home
 
 def create_app():
     app = Flask(__name__)
-
-    app.register_blueprint(BlueprintHome)
-    @app.route('/')
-    def name():
-        return {'mensaje': 'hola mundo'}, 200
-
+    app.registrer_blueprint(blueprint_home)
+    @app.route("/")
+    def home():
+        return {'mensaje': 'hola mundo'}
+    
     return app
 
-if __name__ == '__main__':
-    app = create_app()
-    app.run(debug=True, host='0.0.0.0')
+if__name__="__main__":
+app = create_app()
+app.run(debug=True, host='0.0.0.0')
