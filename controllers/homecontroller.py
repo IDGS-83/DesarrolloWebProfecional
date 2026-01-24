@@ -1,6 +1,8 @@
 from flask import Blueprint
 
-BlueprintHome = Blueprint('home',__name__)
-@BlueprintHome.route('/home')
+
+blueprint_home = Blueprint('home' ,
+__name__)
+@blueprint_home.route("/home")
 def home():
-    return {'msg': 'Hola desde home'}
+    return {'msn' : 'hola desde home'}
