@@ -1,3 +1,6 @@
 /richie
 /entorno
 /richi
+.env
+__pycache__
+*.pyc
