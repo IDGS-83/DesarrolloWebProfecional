@@ -1,2 +1,4 @@
 /richie
 /entorno
+.env
+__pycache__
