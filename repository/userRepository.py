@@ -10,6 +10,7 @@ class UserRepository:
             password=password
         )
 
+        user.set_pass(password)
         db.session.add(user)
         db.session.commit()
         return user
