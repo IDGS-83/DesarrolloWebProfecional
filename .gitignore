@@ -1,1 +1,12 @@
 /richie
+/entorno
+<<<<<<< HEAD
+/richi
+.env
+*.pyc
+__pycache__/
+=======
+.env
+__pycache__
+/richi
+>>>>>>> be9b49c439a8f8a7d427627dfe323630cf1953bc
