@@ -13,3 +13,6 @@ class UserRepository:
         db.session.add(user)
         db.session.commit()
         return user
+    
+    def get_all():
+        return User.query.all()

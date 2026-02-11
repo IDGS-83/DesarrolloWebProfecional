@@ -4,7 +4,7 @@ from extensions import db, migrate
 from config import Config
 from models.user import User
 from controllers.AuthController import auth_bp
-
+from controllers.getUsers import user_bp
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
@@ -14,6 +14,7 @@ def create_app():
 
     app.register_blueprint(blueprint_home)
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
+    app.register_blueprint(user_bp, url_prefix="/api")
 
     @app.route("/")
     def home():
