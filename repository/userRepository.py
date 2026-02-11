@@ -7,7 +7,6 @@ class UserRepository:
         user = User(
             username=username,
             email=email,
-            password=password
         )
 
         user.set_pass(password)
