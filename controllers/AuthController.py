@@ -1,11 +1,17 @@
+<<<<<<< HEAD
 from service.authService import authService
 from flask import Blueprint, jsonify, request
+=======
+from services.AuthService import AuthService
+from flask import Blueprint, request, jsonify
+>>>>>>> be9b49c439a8f8a7d427627dfe323630cf1953bc
 
 auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
+<<<<<<< HEAD
     user = authService.register(data['username'], data['email'], data['password'])
     return jsonify({'id': user.id, 'username': user.username, 'email': user.email}), 201
 
@@ -21,3 +27,10 @@ def get_user(id):
         'username': user.username, 
         'email': user.email
     }), 200
+=======
+    user = AuthService.register(data['username'])
+    return jsonify({
+        "id": user.id,
+        "username": user.username
+    }), 201
+>>>>>>> be9b49c439a8f8a7d427627dfe323630cf1953bc
