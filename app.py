@@ -1,6 +1,6 @@
 from flask import Flask
 from controllers.homecontroller import blueprint_home
-from extensions import db, migrate
+from extensions import db, migrate, swagger
 from config import Config
 from models.user import User
 from controllers.AuthController import auth_bp
@@ -12,6 +12,7 @@ def create_app():
 
     db.init_app(app)
     migrate.init_app(app, db)
+    swagger.init_app(app)
 
     app.register_blueprint(blueprint_home)
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
