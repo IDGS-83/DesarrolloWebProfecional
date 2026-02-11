@@ -5,6 +5,7 @@ from config import Config
 from models.user import User
 from controllers.AuthController import auth_bp
 from controllers.getUsers import user_bp
+
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
