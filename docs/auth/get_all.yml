@@ -1,0 +1,22 @@
+swagger: "2.0"
+
+tags:
+  - Auth
+
+summary: Obtener todos los usuarios
+description: Devuelve una lista de todos los usuarios registrados
+
+responses:
+  200:
+    description: Lista de usuarios
+    schema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+          username:
+            type: string
+          email:
+            type: string

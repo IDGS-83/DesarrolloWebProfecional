@@ -1,0 +1,33 @@
+swagger: "2.0"
+
+tags:
+  - Auth
+
+summary: Actualizar usuario
+description: Actualiza los datos de un usuario por ID
+
+parameters:
+  - name: id
+    in: path
+    required: true
+    type: integer
+    description: ID del usuario
+
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+
+responses:
+  200:
+    description: Usuario actualizado correctamente
+  404:
+    description: Usuario no encontrado

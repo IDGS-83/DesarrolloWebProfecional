@@ -1,10 +1,7 @@
 from flask import Flask
-from controllers.homecontroller import blueprint_home
 from extensions import db, migrate, swagger
 from config import Config
-from models.user import User
 from controllers.AuthController import auth_bp
-from controllers.getUsers import user_bp
 
 def create_app():
     app = Flask(__name__)
@@ -14,16 +11,10 @@ def create_app():
     migrate.init_app(app, db)
     swagger.init_app(app)
 
-    app.register_blueprint(blueprint_home)
-    app.register_blueprint(auth_bp, url_prefix='/api/auth')
-    app.register_blueprint(user_bp, url_prefix="/api")
-
-    @app.route("/")
-    def home():
-        return {'mensaje': 'hola mundo'}
+    app.register_blueprint(auth_bp, url_prefix="/api/auth")
 
     return app
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app = create_app()
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True)

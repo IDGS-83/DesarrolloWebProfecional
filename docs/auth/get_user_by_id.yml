@@ -1,0 +1,17 @@
+swagger: "2.0"
+
+tags:
+  - Auth
+
+parameters:
+  - name: id
+    in: path
+    required: true
+    type: integer
+    description: ID del usuario
+
+responses:
+  200:
+    description: Usuario encontrado
+  404:
+    description: Usuario no encontrado

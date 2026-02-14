@@ -1,0 +1,28 @@
+swagger: "2.0"
+
+tags:
+  - Auth
+
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - email
+        - password
+
+responses:
+  201:
+    description: Usuario creado correctamente
+  400:
+    description: Datos inválidos
