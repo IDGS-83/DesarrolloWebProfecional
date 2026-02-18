@@ -14,3 +14,6 @@ class User(db.Model):
 
     def verify_pass(self, password: str):
         return bcrypt_sha256.verify(password, self.password)
+    
+    def check_password(self, password: str) -> bool:
+        return self.verify_pass(password)

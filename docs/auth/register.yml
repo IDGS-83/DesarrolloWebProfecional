@@ -3,6 +3,9 @@ swagger: "2.0"
 tags:
   - Auth
 
+security:
+  - BearerAuth: []
+
 parameters:
   - name: body
     in: body

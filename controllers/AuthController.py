@@ -2,6 +2,7 @@ import os
 from flask import Blueprint, jsonify, request
 from flasgger import swag_from
 from service.authService import authService
+from flask_jwt_extended import jwt_required
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -11,6 +12,7 @@ DOCS_DIR = os.path.join(BASE_DIR, "..", "docs", "auth")
 
 
 @auth_bp.route("/register", methods=["POST"])
+@jwt_required()
 @swag_from(os.path.join(DOCS_DIR, "register.yml"))
 def register():
     data = request.get_json()
@@ -79,3 +81,16 @@ def update_user(id):
         "username": user.username,
         "email": user.email
     }), 200
+
+def login():
+    data = request.get_json()
+    result = authService.login(data["username"], data["password"])
+    if not result:
+        return jsonify({"message": "Invalid credentials"}), 401
+    token = result["access_token"]
+    user = result["user"]
+    return jsonify({
+        "access_token": token,
+        "user": user.to_dict()
+    }), 200
+

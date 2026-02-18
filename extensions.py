@@ -12,9 +12,14 @@ swagger_template = {
         "description": "api del 83",
         "version": "1.0"
     },
-    "basePath": "/",
-    "schemes": ["http", "https"],
-    "paths": {}
+    "SecurityDefinitions": {
+        "BearerAuth":{
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+            "description": "AQUI VA Bearer <token>"
+        }
+    }
 }
 
 swagger = Swagger(template=swagger_template)
