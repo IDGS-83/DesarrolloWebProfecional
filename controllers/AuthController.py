@@ -107,14 +107,4 @@ def login():
         "access_token": token,
         "user": user.to_dict()
     }), 200
-    data = request.get_json()
-    result = authService.login(data["username"], data["password"])
-    if not result:
-        return jsonify({"message": "Invalid credentials"}), 401
-    token = result["access_token"]
-    user = result["user"]
-    return jsonify({
-        "access_token": token,
-        "user": user.to_dict()
-    }), 200
 
