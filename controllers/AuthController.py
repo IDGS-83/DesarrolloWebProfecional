@@ -12,7 +12,7 @@ DOCS_DIR = os.path.join(BASE_DIR, "..", "docs", "auth")
 
 
 @auth_bp.route("/register", methods=["POST"])
-@jwt_required()
+# registration should not require authentication
 @swag_from(os.path.join(DOCS_DIR, "register.yml"))
 def register():
     data = request.get_json()
@@ -20,11 +20,18 @@ def register():
     if not data:
         return jsonify({"error": "JSON requerido"}), 400
 
-    user = authService.register(
-        data["username"],
-        data["email"],
-        data["password"]
-    )
+    try:
+        user = authService.register(
+            data["username"],
+            data["email"],
+            data["password"]
+        )
+    except ValueError as ve:
+        # duplicate username/email
+        return jsonify({"error": str(ve)}), 409
+    except Exception as e:
+        # unexpected DB error
+        return jsonify({"error": "Database error"}), 500
 
     return jsonify({
         "id": user.id,
@@ -82,7 +89,24 @@ def update_user(id):
         "email": user.email
     }), 200
 
+
+@auth_bp.route("/login", methods=["POST"])
+@swag_from(os.path.join(DOCS_DIR, "login.yml"))
 def login():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "JSON requerido"}), 400
+
+    result = authService.login(data.get("username"), data.get("password"))
+    if not result:
+        return jsonify({"message": "Invalid credentials"}), 401
+
+    token = result["access_token"]
+    user = result["user"]
+    return jsonify({
+        "access_token": token,
+        "user": user.to_dict()
+    }), 200
     data = request.get_json()
     result = authService.login(data["username"], data["password"])
     if not result:

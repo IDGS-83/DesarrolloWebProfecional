@@ -6,7 +6,14 @@ class authService:
 
     @staticmethod
     def register(username, email, password):
-        return UserRepository.create(username, email, password)
+        try:
+            return UserRepository.create(username, email, password)
+        except ValueError as ve:
+            # bubble up for controller to handle
+            raise
+        except Exception:
+            # other DB errors should also propagate
+            raise
 
     @staticmethod
     def find_by_id(id):
@@ -14,23 +21,21 @@ class authService:
 
     @staticmethod
     def login(username, password):
-        user= UserRepository.find_by_user(username)
+        # look up user by username
+        user = UserRepository.find_by_username(username)
         if not user:
             return None
-        
-        check = user.check_password(password)
 
-        claims =  {
-            "username": user.username,
-        }
+        # verify password
+        if not user.check_password(password):
+            return None
+
+        claims = {"username": user.username}
 
         token = create_access_token(
             identity=user.id,
             additional_claims=claims,
             expires_delta=timedelta(hours=8)
-            )
-        
-        return {
-            "access_token": token,
-            "user": user
-        }
+        )
+
+        return {"access_token": token, "user": user}

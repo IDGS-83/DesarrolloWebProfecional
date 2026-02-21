@@ -12,17 +12,16 @@ parameters:
       properties:
         username:
           type: string
-        email:
-          type: string
         password:
           type: string
       required:
         - username
-        - email
         - password
 
 responses:
-  201:
-    description: Usuario creado correctamente
+  200:
+    description: Login successful, returns access token and user info
   400:
-    description: Datos inválidos
+    description: JSON missing or invalid
+  401:
+    description: Invalid credentials

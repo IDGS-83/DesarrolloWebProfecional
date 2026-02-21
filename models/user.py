@@ -17,3 +17,10 @@ class User(db.Model):
     
     def check_password(self, password: str) -> bool:
         return self.verify_pass(password)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email
+        }
