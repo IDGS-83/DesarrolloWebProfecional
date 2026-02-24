@@ -16,8 +16,7 @@ def create_app():
     jwt.init_app(app)
 
     app.register_blueprint(auth_bp, url_prefix="/api/auth")
-    app.register_blueprint(user_bp)
-
+    app.register_blueprint(user_bp, url_prefix="/api/users")
     return app
 
 if __name__ == "__main__":
