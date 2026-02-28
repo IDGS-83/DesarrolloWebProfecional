@@ -1,12 +1,30 @@
-/richie
-/entorno
-<<<<<<< HEAD
-/richi
+# Entorno virtual
+/richi/
+env/
+venv/
+
+# Archivos de entorno
 .env
-*.pyc
+.env.*
+
+# Python cache
 __pycache__/
-=======
-.env
-__pycache__
-/richi
->>>>>>> be9b49c439a8f8a7d427627dfe323630cf1953bc
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de compilación
+*.so
+
+# Archivos de logs
+*.log
+
+# Archivos de base de datos locales
+*.sqlite3
+
+# Configuración de VSCode
+.vscode/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db

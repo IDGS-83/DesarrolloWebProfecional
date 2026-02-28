@@ -1,17 +1,31 @@
 from extensions import db
+from passlib.hash import bcrypt_sha256
 
 class User(db.Model):
-<<<<<<< HEAD
-    
     __tablename__ = 'users'
-    
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True)
     email = db.Column(db.String(120), unique=True)
-    password = db.Column(db.String(200))
-    
-=======
-    __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
->>>>>>> be9b49c439a8f8a7d427627dfe323630cf1953bc
+    password = db.Column(db.String(255))
+
+    def _truncate_password(self, password: str) -> str:
+        return password.encode("utf-8")[:72].decode("utf-8", "ignore")
+
+    def set_pass(self, password: str):
+        password = self._truncate_password(password)
+        self.password = bcrypt_sha256.hash(password)
+
+    def verify_pass(self, password: str):
+        password = self._truncate_password(password)
+        return bcrypt_sha256.verify(password, self.password)
+
+    def check_password(self, password: str) -> bool:
+        return self.verify_pass(password)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "username": self.username,
+            "email": self.email
+        }
