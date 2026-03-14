@@ -1,26 +1,20 @@
 from extensions import db
-from passlib.hash import bcrypt_sha256
+from datetime import datetime
 
 class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True)
-    email = db.Column(db.String(120), unique=True)
-    password = db.Column(db.String(255))
-
-    def set_pass(self, password: str):
-        self.password = bcrypt_sha256.hash(password)
-
-    def verify_pass(self, password: str):
-        return bcrypt_sha256.verify(password, self.password)
-    
-    def check_password(self, password: str) -> bool:
-        return self.verify_pass(password)
+    cognito_sub = db.Column(db.String(255), unique=True, nullable=False)
+    email = db.Column(db.String(255), unique=True, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def to_dict(self):
         return {
             "id": self.id,
-            "username": self.username,
-            "email": self.email
+            "cognito_sub": self.cognito_sub,
+            "email": self.email,
+            "created_at": self.created_at.isoformat() if self.created_at else None,
+            "updated_at": self.updated_at.isoformat() if self.updated_at else None
         }
