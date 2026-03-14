@@ -4,31 +4,24 @@ from extensions import db
 class UserRepository:
 
     @staticmethod
-    def create(username, email, password):
-        # validate uniqueness before creation to avoid DB errors
-        if User.query.filter_by(username=username).first():
-            raise ValueError("Username already exists")
-        if User.query.filter_by(email=email).first():
-            raise ValueError("Email already exists")
-
-        user = User(username=username, email=email)
-        user.set_pass(password)
+    def create(cognito_sub, email, role="user"):
+        user = User(
+            cognito_sub=cognito_sub,
+            email=email,
+            role=role
+        )
         db.session.add(user)
-        try:
-            db.session.commit()
-        except Exception:
-            db.session.rollback()
-            raise
+        db.session.commit()
         return user
 
     @staticmethod
     def find_by_id(id):
         return User.query.get(id)
-    
+
     @staticmethod
-    def find_by_username(username):
-        return User.query.filter_by(username=username).first()
-    
+    def find_by_cognito_sub(sub):
+        return User.query.filter_by(cognito_sub=sub).first()
+
     @staticmethod
-    def find_by_email(email):
-        return User.query.filter_by(email=email).first()
+    def get_all():
+        return User.query.all()
